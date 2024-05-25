@@ -14,11 +14,20 @@ app.use('/user',userRouter)
 app.use('/admin',adminRouter) 
 app.use('/movie',movieRouter)
 app.use('/booking',bookingRouter) 
+
+
+
+const PORT = process.env.PORT || 5000;
+const MONGODB_PASSWORD = process.env.MONGODB_PASSWORD;
+const MONGODB_URI = `mongodb+srv://admin:${MONGODB_PASSWORD}@cluster0.f2sao74.mongodb.net/?retryWrites=true&w=majority`;
+
 mongoose
-.connect(`mongodb+srv://admin:${process.env.MONGODB_PASSWORD}@cluster0.f2sao74.mongodb.net/`)
-.then(()=>{
-    app.listen(5000,()=>console.log("Connected to DataBase And Server"))
-})
-.catch((err)=>console.log(err))
-
-
+  .connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Connected to Database and Server is running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('Failed to connect to MongoDB', err);
+  });
