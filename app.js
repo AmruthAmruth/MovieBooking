@@ -22,12 +22,12 @@ const MONGODB_PASSWORD = process.env.MONGODB_PASSWORD;
 const MONGODB_URI = `mongodb+srv://admin:${MONGODB_PASSWORD}@cluster0.f2sao74.mongodb.net/?retryWrites=true&w=majority`;
 
 mongoose
-  .connect(MONGODB_URI)
+  .connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     app.listen(PORT, () => {
       console.log(`Connected to Database and Server is running on port ${PORT}`);
     });
   })
   .catch((err) => {
-    console.error('Failed to connect to MongoDB', err); 
+    console.error('Failed to connect to MongoDB', err);
   });
